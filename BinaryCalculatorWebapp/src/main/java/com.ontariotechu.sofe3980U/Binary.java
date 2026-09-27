@@ -79,4 +79,82 @@ public class Binary
 		return result;
 		
 	}
+
+	/**
+	* Bitwise logical OR of two binary variables.
+	*
+	* @param num1 The first operand
+	* @param num2 The second operand
+	* @return A binary variable with the value of num1 OR num2.
+	*/
+	public static Binary or(Binary num1, Binary num2)
+	{
+		int ind1 = num1.number.length() - 1;
+		int ind2 = num2.number.length() - 1;
+		StringBuilder num3 = new StringBuilder();
+		while (ind1 >= 0 || ind2 >= 0)
+		{
+			char bit1 = (ind1 >= 0) ? num1.number.charAt(ind1) : '0';
+			char bit2 = (ind2 >= 0) ? num2.number.charAt(ind2) : '0';
+			if (bit1 == '1' || bit2 == '1') {
+				num3.insert(0, "1");
+			} else {
+				num3.insert(0, "0");
+			}
+			ind1--;
+			ind2--;
+		}
+		return new Binary(num3.toString());
+	}
+
+	/**
+	* Bitwise logical AND of two binary variables.
+	*
+	* @param num1 The first operand
+	* @param num2 The second operand
+	* @return A binary variable with the value of num1 AND num2.
+	*/
+	public static Binary and(Binary num1, Binary num2)
+	{
+		int ind1 = num1.number.length() - 1;
+		int ind2 = num2.number.length() - 1;
+		StringBuilder num3 = new StringBuilder();
+		while (ind1 >= 0 || ind2 >= 0)
+		{
+			char bit1 = (ind1 >= 0) ? num1.number.charAt(ind1) : '0';
+			char bit2 = (ind2 >= 0) ? num2.number.charAt(ind2) : '0';
+			if (bit1 == '1' && bit2 == '1') {
+				num3.insert(0, "1");
+			} else {
+				num3.insert(0, "0");
+			}
+			ind1--;
+			ind2--;
+		}
+		return new Binary(num3.toString());
+	}
+
+	/**
+	* Multiplying two binary variables.
+	*
+	* @param num1 The first operand
+	* @param num2 The second operand
+	* @return A binary variable with the value of num1 * num2.
+	*/
+	public static Binary multiply(Binary num1, Binary num2)
+	{
+		Binary result = new Binary("0");
+		String n2 = num2.number;
+		for (int i = n2.length() - 1; i >= 0; i--) {
+			if (n2.charAt(i) == '1') {
+				int shift = n2.length() - 1 - i;
+				StringBuilder shifted = new StringBuilder(num1.number);
+				for (int s = 0; s < shift; s++) {
+					shifted.append("0");
+				}
+				result = Binary.add(result, new Binary(shifted.toString()));
+			}
+		}
+		return result;
+	}
 }	
